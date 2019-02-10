@@ -20,12 +20,13 @@ type PluginTestSuite struct {
 }
 
 type Taxon struct {
-	nested.TreeNode
-
-	ID       uint `gorm:"primary_key"`
-	Name     string
-	ParentID uint
-	Parent   *Taxon `gorm:"association_autoupdate:false"`
+	ID        uint `gorm:"primary_key"`
+	Name      string
+	ParentID  uint
+	Parent    *Taxon `gorm:"association_autoupdate:false"`
+	TreeLeft  int    `gorm-nested:"left"`
+	TreeRight int    `gorm-nested:"right"`
+	TreeLevel int    `gorm-nested:"level"`
 }
 
 func (t Taxon) GetParentID() interface{} {
@@ -260,67 +261,67 @@ func (suite *PluginTestSuite) TestMoveNodeToLeft() {
 		case "Electronics":
 			assert.Equal(suite.T(), 1, taxon.TreeLeft)
 			assert.Equal(suite.T(), 22, taxon.TreeRight)
-			assert.Equal(suite.T(), 0, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 0, taxon.TreeLevel)
 			count++
 			break
 		case "Television":
 			assert.Equal(suite.T(), 2, taxon.TreeLeft)
 			assert.Equal(suite.T(), 19, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "Game Consoles":
 			assert.Equal(suite.T(), 20, taxon.TreeLeft)
 			assert.Equal(suite.T(), 21, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "Tube":
 			assert.Equal(suite.T(), 3, taxon.TreeLeft)
 			assert.Equal(suite.T(), 4, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "LCD":
 			assert.Equal(suite.T(), 5, taxon.TreeLeft)
 			assert.Equal(suite.T(), 16, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Plasma":
 			assert.Equal(suite.T(), 17, taxon.TreeLeft)
 			assert.Equal(suite.T(), 18, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Portable Electronics":
 			assert.Equal(suite.T(), 6, taxon.TreeLeft)
 			assert.Equal(suite.T(), 15, taxon.TreeRight)
-			assert.Equal(suite.T(), 3, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 3, taxon.TreeLevel)
 			count++
 			break
 		case "MP3":
 			assert.Equal(suite.T(), 7, taxon.TreeLeft)
 			assert.Equal(suite.T(), 10, taxon.TreeRight)
-			assert.Equal(suite.T(), 4, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 4, taxon.TreeLevel)
 			count++
 			break
 		case "Flash":
 			assert.Equal(suite.T(), 8, taxon.TreeLeft)
 			assert.Equal(suite.T(), 9, taxon.TreeRight)
-			assert.Equal(suite.T(), 5, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 5, taxon.TreeLevel)
 			count++
 			break
 		case "CD Player":
 			assert.Equal(suite.T(), 11, taxon.TreeLeft)
 			assert.Equal(suite.T(), 12, taxon.TreeRight)
-			assert.Equal(suite.T(), 4, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 4, taxon.TreeLevel)
 			count++
 			break
 		case "Radio":
 			assert.Equal(suite.T(), 13, taxon.TreeLeft)
 			assert.Equal(suite.T(), 14, taxon.TreeRight)
-			assert.Equal(suite.T(), 4, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 4, taxon.TreeLevel)
 			count++
 			break
 		}
@@ -354,67 +355,67 @@ func (suite *PluginTestSuite) TestMoveNodeToRight() {
 		case "Electronics":
 			assert.Equal(suite.T(), 1, taxon.TreeLeft)
 			assert.Equal(suite.T(), 22, taxon.TreeRight)
-			assert.Equal(suite.T(), 0, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 0, taxon.TreeLevel)
 			count++
 			break
 		case "Television":
 			assert.Equal(suite.T(), 2, taxon.TreeLeft)
 			assert.Equal(suite.T(), 7, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "Game Consoles":
 			assert.Equal(suite.T(), 8, taxon.TreeLeft)
 			assert.Equal(suite.T(), 9, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "Tube":
 			assert.Equal(suite.T(), 3, taxon.TreeLeft)
 			assert.Equal(suite.T(), 4, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Plasma":
 			assert.Equal(suite.T(), 5, taxon.TreeLeft)
 			assert.Equal(suite.T(), 6, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Portable Electronics":
 			assert.Equal(suite.T(), 10, taxon.TreeLeft)
 			assert.Equal(suite.T(), 21, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "MP3":
 			assert.Equal(suite.T(), 11, taxon.TreeLeft)
 			assert.Equal(suite.T(), 16, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Flash":
 			assert.Equal(suite.T(), 12, taxon.TreeLeft)
 			assert.Equal(suite.T(), 13, taxon.TreeRight)
-			assert.Equal(suite.T(), 3, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 3, taxon.TreeLevel)
 			count++
 			break
 		case "LCD":
 			assert.Equal(suite.T(), 16, taxon.TreeLeft)
 			assert.Equal(suite.T(), 17, taxon.TreeRight)
-			assert.Equal(suite.T(), 3, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 3, taxon.TreeLevel)
 			count++
 			break
 		case "CD Player":
 			assert.Equal(suite.T(), 17, taxon.TreeLeft)
 			assert.Equal(suite.T(), 18, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Radio":
 			assert.Equal(suite.T(), 19, taxon.TreeLeft)
 			assert.Equal(suite.T(), 20, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		}
@@ -446,67 +447,67 @@ func (suite *PluginTestSuite) TestChildNodeBecomesRoot() {
 		case "Electronics":
 			assert.Equal(suite.T(), 1, taxon.TreeLeft)
 			assert.Equal(suite.T(), 18, taxon.TreeRight)
-			assert.Equal(suite.T(), 0, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 0, taxon.TreeLevel)
 			count++
 			break
 		case "Television":
 			assert.Equal(suite.T(), 2, taxon.TreeLeft)
 			assert.Equal(suite.T(), 9, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "Game Consoles":
 			assert.Equal(suite.T(), 10, taxon.TreeLeft)
 			assert.Equal(suite.T(), 11, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "Tube":
 			assert.Equal(suite.T(), 3, taxon.TreeLeft)
 			assert.Equal(suite.T(), 4, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "LCD":
 			assert.Equal(suite.T(), 5, taxon.TreeLeft)
 			assert.Equal(suite.T(), 6, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Plasma":
 			assert.Equal(suite.T(), 7, taxon.TreeLeft)
 			assert.Equal(suite.T(), 8, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Portable Electronics":
 			assert.Equal(suite.T(), 12, taxon.TreeLeft)
 			assert.Equal(suite.T(), 17, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "CD Player":
 			assert.Equal(suite.T(), 13, taxon.TreeLeft)
 			assert.Equal(suite.T(), 14, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Radio":
 			assert.Equal(suite.T(), 15, taxon.TreeLeft)
 			assert.Equal(suite.T(), 16, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "MP3":
 			assert.Equal(suite.T(), 19, taxon.TreeLeft)
 			assert.Equal(suite.T(), 22, taxon.TreeRight)
-			assert.Equal(suite.T(), 0, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 0, taxon.TreeLevel)
 			count++
 			break
 		case "Flash":
 			assert.Equal(suite.T(), 20, taxon.TreeLeft)
 			assert.Equal(suite.T(), 21, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		}
@@ -577,47 +578,47 @@ func (suite *PluginTestSuite) TestAutoUpdateParentAssociation() {
 
 	assert.Equal(suite.T(), 1, electronics.TreeLeft)
 	assert.Equal(suite.T(), 22, electronics.TreeRight)
-	assert.Equal(suite.T(), 0, electronics.GetTreeLevel())
+	assert.Equal(suite.T(), 0, electronics.TreeLevel)
 
 	assert.Equal(suite.T(), 2, television.TreeLeft)
 	assert.Equal(suite.T(), 9, television.TreeRight)
-	assert.Equal(suite.T(), 1, television.GetTreeLevel())
+	assert.Equal(suite.T(), 1, television.TreeLevel)
 
 	assert.Equal(suite.T(), 3, tube.TreeLeft)
 	assert.Equal(suite.T(), 4, tube.TreeRight)
-	assert.Equal(suite.T(), 2, tube.GetTreeLevel())
+	assert.Equal(suite.T(), 2, tube.TreeLevel)
 
 	assert.Equal(suite.T(), 5, lcd.TreeLeft)
 	assert.Equal(suite.T(), 6, lcd.TreeRight)
-	assert.Equal(suite.T(), 2, lcd.GetTreeLevel())
+	assert.Equal(suite.T(), 2, lcd.TreeLevel)
 
 	assert.Equal(suite.T(), 7, plasma.TreeLeft)
 	assert.Equal(suite.T(), 8, plasma.TreeRight)
-	assert.Equal(suite.T(), 2, plasma.GetTreeLevel())
+	assert.Equal(suite.T(), 2, plasma.TreeLevel)
 
 	//assert.Equal(suite.T(), 10, gameConsoles.TreeLeft)
 	//assert.Equal(suite.T(), 11, gameConsoles.TreeRight)
-	//assert.Equal(suite.T(), 1, gameConsoles.GetTreeLevel())
+	//assert.Equal(suite.T(), 1, gameConsoles.TreeLevel)
 
 	assert.Equal(suite.T(), 12, portableElectronics.TreeLeft)
 	assert.Equal(suite.T(), 21, portableElectronics.TreeRight)
-	assert.Equal(suite.T(), 1, portableElectronics.GetTreeLevel())
+	assert.Equal(suite.T(), 1, portableElectronics.TreeLevel)
 
 	assert.Equal(suite.T(), 13, mp3.TreeLeft)
 	assert.Equal(suite.T(), 16, mp3.TreeRight)
-	assert.Equal(suite.T(), 2, mp3.GetTreeLevel())
+	assert.Equal(suite.T(), 2, mp3.TreeLevel)
 
 	assert.Equal(suite.T(), 17, cdPlayer.TreeLeft)
 	assert.Equal(suite.T(), 18, cdPlayer.TreeRight)
-	assert.Equal(suite.T(), 2, cdPlayer.GetTreeLevel())
+	assert.Equal(suite.T(), 2, cdPlayer.TreeLevel)
 
 	assert.Equal(suite.T(), 19, radio.TreeLeft)
 	assert.Equal(suite.T(), 20, radio.TreeRight)
-	assert.Equal(suite.T(), 2, radio.GetTreeLevel())
+	assert.Equal(suite.T(), 2, radio.TreeLevel)
 
 	assert.Equal(suite.T(), 14, flash.TreeLeft)
 	assert.Equal(suite.T(), 15, flash.TreeRight)
-	assert.Equal(suite.T(), 3, flash.GetTreeLevel())
+	assert.Equal(suite.T(), 3, flash.TreeLevel)
 }
 
 func (suite *PluginTestSuite) createTree() {
@@ -690,72 +691,96 @@ func (suite *PluginTestSuite) createTree() {
 		case "Electronics":
 			assert.Equal(suite.T(), 1, taxon.TreeLeft)
 			assert.Equal(suite.T(), 22, taxon.TreeRight)
-			assert.Equal(suite.T(), 0, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 0, taxon.TreeLevel)
 			count++
 			break
 		case "Television":
 			assert.Equal(suite.T(), 2, taxon.TreeLeft)
 			assert.Equal(suite.T(), 9, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "Tube":
 			assert.Equal(suite.T(), 3, taxon.TreeLeft)
 			assert.Equal(suite.T(), 4, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 		case "LCD":
 			assert.Equal(suite.T(), 5, taxon.TreeLeft)
 			assert.Equal(suite.T(), 6, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Plasma":
 			assert.Equal(suite.T(), 7, taxon.TreeLeft)
 			assert.Equal(suite.T(), 8, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Game Consoles":
 			assert.Equal(suite.T(), 10, taxon.TreeLeft)
 			assert.Equal(suite.T(), 11, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "Portable Electronics":
 			assert.Equal(suite.T(), 12, taxon.TreeLeft)
 			assert.Equal(suite.T(), 21, taxon.TreeRight)
-			assert.Equal(suite.T(), 1, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 1, taxon.TreeLevel)
 			count++
 			break
 		case "MP3":
 			assert.Equal(suite.T(), 13, taxon.TreeLeft)
 			assert.Equal(suite.T(), 16, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "CD Player":
 			assert.Equal(suite.T(), 17, taxon.TreeLeft)
 			assert.Equal(suite.T(), 18, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Radio":
 			assert.Equal(suite.T(), 19, taxon.TreeLeft)
 			assert.Equal(suite.T(), 20, taxon.TreeRight)
-			assert.Equal(suite.T(), 2, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 2, taxon.TreeLevel)
 			count++
 			break
 		case "Flash":
 			assert.Equal(suite.T(), 14, taxon.TreeLeft)
 			assert.Equal(suite.T(), 15, taxon.TreeRight)
-			assert.Equal(suite.T(), 3, taxon.GetTreeLevel())
+			assert.Equal(suite.T(), 3, taxon.TreeLevel)
 			count++
 			break
 		}
 	}
 
 	assert.Equal(suite.T(), len(taxons), count)
+}
+
+func (suite *PluginTestSuite) TestGetTreeLeft() {
+	t := &Taxon{
+		TreeLeft: 41,
+	}
+
+	assert.Equal(suite.T(), 41, nested.GetTreeLeft(t))
+}
+
+func (suite *PluginTestSuite) TestGetTreeRight() {
+	t := &Taxon{
+		TreeRight: 41,
+	}
+
+	assert.Equal(suite.T(), 41, nested.GetTreeRight(t))
+}
+
+func (suite *PluginTestSuite) TestGetTreeLevel() {
+	t := &Taxon{
+		TreeLevel: 41,
+	}
+
+	assert.Equal(suite.T(), 41, nested.GetTreeLevel(t))
 }
 
 func TestPluginTestSuite(t *testing.T) {

@@ -5,6 +5,7 @@ import (
 )
 
 const (
+	tagName             = "gorm-nested"
 	callbackNameCreate  = "gorm-nested:create"
 	callbackNameUpdate  = "gorm-nested:update"
 	callbackNameDelete  = "gorm-nested:delete"
@@ -14,7 +15,10 @@ const (
 
 // Plugin gorm nested set plugin
 type Plugin struct {
-	db *gorm.DB
+	db            *gorm.DB
+	treeLeftName  string
+	treeRightName string
+	treeLevelName string
 }
 
 // Register registers nested set plugin
@@ -35,49 +39,6 @@ func (p *Plugin) enableCallbacks() {
 
 // Interface must be implemented by the gorm model
 type Interface interface {
-	GetTreeLeft() int
-	GetTreeRight() int
-	GetTreeLevel() int
 	GetParentID() interface{}
 	GetParent() Interface
-	SetTreeLeft(treeLeft int)
-	SetTreeRight(treeRight int)
-	SetTreeLevel(level int)
-}
-
-// TreeNode mode definition, include fields TreeLeft, TreeRight, TreeLevel which could be embedded in your models
-type TreeNode struct {
-	TreeLeft  int
-	TreeRight int
-	TreeLevel int
-}
-
-// GetTreeLeft returns tree node left value
-func (tn TreeNode) GetTreeLeft() int {
-	return tn.TreeLeft
-}
-
-// GetTreeRight returns tree node right value
-func (tn TreeNode) GetTreeRight() int {
-	return tn.TreeRight
-}
-
-// GetTreeLevel returns tree node level
-func (tn TreeNode) GetTreeLevel() int {
-	return tn.TreeLevel
-}
-
-// SetTreeLeft sets tree node left value
-func (tn *TreeNode) SetTreeLeft(treeLeft int) {
-	tn.TreeLeft = treeLeft
-}
-
-// SetTreeRight sets tree node right value
-func (tn *TreeNode) SetTreeRight(treeRight int) {
-	tn.TreeRight = treeRight
-}
-
-// SetTreeLevel sets tree node level
-func (tn *TreeNode) SetTreeLevel(level int) {
-	tn.TreeLevel = level
 }
